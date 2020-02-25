@@ -1,3 +1,20 @@
+" Plugins
+" ------------------------------------------------------------------------------
+call plug#begin('~/.vim/plugged')
+
+" General plugins
+Plug 'scrooloose/nerdtree'
+Plug 'itchyny/lightline.vim'
+
+" Themes
+Plug 'KabbAmine/yowish.vim'
+Plug 'ayu-theme/ayu-vim'
+
+call plug#end()
+
+" General
+" ------------------------------------------------------------------------------
+
 :set number relativenumber
 
 " Set compatibility to Vim only.
@@ -82,13 +99,52 @@ vnoremap <Space> zf
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview"
 
+" Visual
+" ------------------------------------------------------------------------------
+" Add git status to lightline
+let g:lightline = {
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ 'vcs':  '\v[\/]\.(git|hg|svn)$',
+      \ 'dir':  '\v[\/](target)$',
+      \ 'file': '\v\.(exe|so|dll)$',
+      \ 'link': 'some_bad_symbolic_links',
+      \ }
+
+" Scheme
+set termguicolors
+"let ayucolor="dark"
+let ayucolor="mirage"
+colorscheme ayu
+
+set showmatch
+
+" Keybindings
+" ------------------------------------------------------------------------------
 :map <SPACE> <leader>
-:map <leader>w- :split<cr>
-:map <leader>w\ :vsplit<cr>
+
+" Windows
+:map <leader>w- :split<CR>
+:map <leader>w\ :vsplit<CR>
 :map <leader>wh <C-W>h
 :map <leader>wj <C-W>j
 :map <leader>wk <C-W>k
 :map <leader>wl <C-W>l
-:map <leader>bb :buffers<cr>
-:map <leader>bn :bnext<cr>
-:map <leader>bp :bprev<cr>
+
+" Buffers
+:map <leader>bl :buffers<CR>
+:map <leader>bn :bnext<CR>
+:map <leader>bp :bprev<CR>
+:map <leader>bb :b#<CR>
+
+" Reload config
+:map <leader>vs :source ~/.vimrc<CR>
+" Edit config
+:map <leader>ve :e ~/.vimrc<CR>
+" Open file browser
+:map <leader>pt :NERDTreeToggle<CR>
